@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum Locations { mainMenu, setBoardState };
+public enum Locations { mainMenu, setBoardState, playGameState };
 
 public class GameManager : MonoBehaviour {
 	private GameStateMachine<GameManager> StateMachine;
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 		states = new Dictionary<string, State<GameManager>>();
 		states.Add ("mainMenu", new MainMenuState());
 		states.Add ("setBoardState", SetBoardState.Instance);
+		states.Add ("playGameState", PlayGameState.Instance);
 		
 		//Accordian.GetInstance();
 		

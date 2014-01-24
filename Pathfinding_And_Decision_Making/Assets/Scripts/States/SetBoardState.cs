@@ -30,27 +30,29 @@ public sealed class SetBoardState :  State<GameManager> {
 	{
 		Debug.Log ("setBoard");
 		//Accordian.GetInstance().Deal();
-		Accordian.Instance.Deal();
+		Setup.Instance.startSetup();
 	}
 	//Execute is the same as update, its just being called from cardGameStateMachine
 	public override void Execute (GameManager g) {
 		//Debug.Log("Now Playing accordian");
 		//if(!isPlaying)	
 		//g.ChangeState(nextState);
-		if (Accordian.Instance.startPressed)				
-			SetNextState (g, "mainMenu");
-		Accordian.Instance.startPressed = false;
+		if (Setup.Instance.startPressed)				
+			SetNextState (g, "playGameState");
+		Setup.Instance.startPressed = false;
 	}
 	
 	public override void Exit(GameManager g) {
-		Debug.Log("Exiting accordian");
+		Setup.Instance.resetButtons ();
+		Debug.Log("Exiting set board");
 	}
+	/*
 	public void setIsPlayingAccordian(bool _play)
 	{
 			 isPlaying = false;
 		if(_play)
 			isPlaying = true;
-	}
+	}*/
 	public override void SetNextState(GameManager g, string state)//This needs to be removed in all states once I get the GUI working
 	{
 		g.ChangeState (state);

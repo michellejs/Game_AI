@@ -16,7 +16,7 @@ abstract public class Game : MonoBehaviour {
 	public virtual void Awake () {
 		
 	}
-	public abstract void Deal();
+	public abstract void startSetup();
 }
 
 
