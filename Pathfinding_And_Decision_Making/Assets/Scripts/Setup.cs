@@ -22,6 +22,7 @@ public class Setup : Game
     
 	}
 	public bool startPressed = false;
+	public bool setupDisplayed = false;
 	GUIContent[] comboBoxList;
 	private List<ComboBox> inputBoxes = new List<ComboBox> ();
 	//ComboBox comboBoxControl;// = new ComboBox();
@@ -108,20 +109,22 @@ public class Setup : Game
 		foreach(ComboBox cb in inputBoxes)
 		cb.Show();
 
-		if(GUI.Button(new Rect(20,40,120,20), "Start")) {
-			//Application.LoadLevel(1);
-			updateMazeData ();
-			Debug.Log("Start Game Pressed");
-			startPressed = true;
-		}
-		if(GUI.Button(new Rect(20,80,120,20), "Random Game")) {
-			//Application.LoadLevel(1);
-			Debug.Log("Random Game Pressed");
-			randomMazeData ();
-			startPressed = true;
-		}
-		GUI.skin.box.wordWrap = true;
-		GUI.Box (new Rect (20, 120, 250, 500), instructions);
+		if (setupDisplayed) {
+						if (GUI.Button (new Rect (20, 40, 120, 20), "Start")) {
+								//Application.LoadLevel(1);
+								updateMazeData ();
+								Debug.Log ("Start Game Pressed");
+								startPressed = true;
+						}
+						if (GUI.Button (new Rect (20, 80, 120, 20), "Random Game")) {
+								//Application.LoadLevel(1);
+								Debug.Log ("Random Game Pressed");
+								randomMazeData ();
+								startPressed = true;
+						}
+						GUI.skin.box.wordWrap = true;
+						GUI.Box (new Rect (20, 120, 250, 500), instructions);
+				}
 
 	}
 	private void updateMazeData()
@@ -177,10 +180,9 @@ public class Setup : Game
 	}
 	private void clearMazeData()
 	{
-		int d = 0;
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
-
+				mazeData[i,j]=0;
 			}
 		}
 	}

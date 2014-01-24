@@ -30,6 +30,7 @@ public sealed class SetBoardState :  State<GameManager> {
 	{
 		Debug.Log ("setBoard");
 		//Accordian.GetInstance().Deal();
+		Setup.Instance.setupDisplayed = true;
 		Setup.Instance.startSetup();
 	}
 	//Execute is the same as update, its just being called from cardGameStateMachine
@@ -44,6 +45,7 @@ public sealed class SetBoardState :  State<GameManager> {
 	
 	public override void Exit(GameManager g) {
 		Setup.Instance.resetButtons ();
+		Setup.Instance.setupDisplayed = false;
 		Debug.Log("Exiting set board");
 	}
 	/*

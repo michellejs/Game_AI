@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\States\PlayGameState.cs" />
      <Compile Include="Assets\Scripts\States\SetBoardState.cs" />
      <Compile Include="Assets\Scripts\States\State.cs" />
+     <Compile Include="Assets\Scripts\Tile.cs" />
      <None Include="Assets\Vectrosity\Documentation\Vectrosity changelog.txt" />
      <None Include="Assets\Vectrosity\Documentation\Vectrosity Upgrade Guide.txt" />
  <Reference Include="Assets\Vectrosity\Vectrosity_Unity3">
