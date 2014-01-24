@@ -23,7 +23,7 @@ public sealed class PlayGameState :  State<GameManager> {
 		if (g.Location != Locations.playGameState) {
 			g.ChangeLocation(Locations.playGameState);
 			Play.Instance.playDisplayed = true;
-			Play.Instance.startSetup();//probably get rid of this and GAME all together
+			//Play.Instance.startSetup();//probably get rid of this and GAME all together
 			Play.Instance.createTiles();
 			Play.Instance.displayGrid();
 		}

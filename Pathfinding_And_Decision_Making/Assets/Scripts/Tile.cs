@@ -7,7 +7,7 @@ public class Tile {
 	int gScore;
 	int hScore;
 	int fScore;
-	int cost;
+	public int cost;
 
 
 

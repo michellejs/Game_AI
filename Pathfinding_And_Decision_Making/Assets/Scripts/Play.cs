@@ -23,9 +23,10 @@ public class Play : Game
 
 	//public List<Tile> grid = new List<Tile> ();
 	Tile[,] grid = new Tile[gridLength,gridHeight];
-	public override void startSetup()
-	{
-		Debug.Log("playSetup");
+	List<GameObject> tiles = new List<GameObject>();
+	//public override void startSetup()
+	//{
+	//	Debug.Log("playSetup");
 		//createTiles ();
 		//dealTiles ();
 
@@ -37,7 +38,7 @@ public class Play : Game
 		grassland.transform.position = testPosition;
 		*/
 
-	}
+	//}
 	public void createTiles(){
 
 		int[,] mazeData = Setup.Instance.getMazeData ();
@@ -52,44 +53,68 @@ public class Play : Game
 	}
 	public void displayGrid(){
 
-				float spacer1 = 0f;
-				float spacer2 = 0f;
-				for (int i=0; i<gridLength; i++) {
-						for (int j=0; j<gridHeight; j++) {
-								GameObject grassland = (GameObject)Instantiate (Resources.Load ("Grassland"));
-								Vector3 pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-								grassland.transform.position = pos;
+		float spacer1 = 0f;
+		float spacer2 = 0f;
+		for (int i=0; i<gridLength; i++) {
+			for (int j=0; j<gridHeight; j++) {
+				GameObject tile;
+				Vector3 pos;
+				Debug.Log ("cost: " + grid[i,j].cost);
+				switch(grid[i,j].cost){
+
+				case 0:
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/OpenSpace"));
+					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					tile.transform.position = pos;
+					tiles.Add(tile);
+					break;
+					case 1:
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Swamp"));
+					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					tile.transform.position = pos;
+					tiles.Add(tile);
+					break;
+				case 2:
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Grassland"));
+					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					tile.transform.position = pos;
+					tiles.Add(tile);
+					break;
+					case 3:
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Obstacle"));
+					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					tile.transform.position = pos;
+					tiles.Add(tile);
+					break;	
+				case 4:
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Start"));
+					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					tile.transform.position = pos;
+					tiles.Add(tile);
+					break;
+
+				case 5:
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/End"));
+					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					tile.transform.position = pos;
+					tiles.Add(tile);
+					break;
+					}
+				//GameObject tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Grassland"));
+								//Vector3 pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 5);
+								//tile.transform.position = pos;
+								//tiles.Add(tile);
 								spacer1 += 0.45f;
-						}
+				}
 			
 						spacer2 += 0.45f;
 						spacer1 = 0.0f;
-				}
+			}
 		}
 	private void OnGUI(){
 
 				
-				/*foreach (Tile t in grid) {
-			GameObject grassland = (GameObject)Instantiate (Resources.Load ("Grassland"));
-			Vector3 pos = new Vector3 (t.point.x - spacer, t.point.y - spacer, 0);
-			grassland.transform.position = pos;
-			spacer += 0.5f;
 
-			}
-		}*/
-		/*float spacer1 = 0f;
-		float spacer2 = 0f;
-				for (int i=0; i<gridLength; i++) {
-						for (int j=0; j<gridHeight; j++) {
-								GameObject grassland = (GameObject)Instantiate (Resources.Load ("Grassland"));
-								Vector3 pos = new Vector3 ((grid[i,j].point.x - spacer2) - 2, (grid[i,j].point.y -spacer1) -3, 0);
-								grassland.transform.position = pos;
-								spacer1 += 0.45f;
-						}
-
-						spacer2 += 0.45f;
-						spacer1 = 0.0f;
-				}*/
 		if(playDisplayed){
 				if(GUI.Button(new Rect(20,40,120,20), "Finish")) {
 				//Application.LoadLevel(1);
@@ -100,10 +125,9 @@ public class Play : Game
 			}
 		}
 	public void clearGrid(){//figure out how to destroy grid tiles
-		for(int i=0; i<gridLength; i++){
-			for(int j=0; j<gridHeight; j++){
-
-			}
+		System.Array.Clear (grid, 0, grid.Length);
+		foreach (GameObject tile in tiles) {
+			Destroy (tile);
 		}
 	}
 }

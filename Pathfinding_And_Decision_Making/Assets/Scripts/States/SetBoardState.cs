@@ -31,7 +31,9 @@ public sealed class SetBoardState :  State<GameManager> {
 		Debug.Log ("setBoard");
 		//Accordian.GetInstance().Deal();
 		Setup.Instance.setupDisplayed = true;
-		Setup.Instance.startSetup();
+		//Setup.Instance.startSetup();
+		Setup.Instance.clearMazeData ();
+		Setup.Instance.setDisplayButtons();
 	}
 	//Execute is the same as update, its just being called from cardGameStateMachine
 	public override void Execute (GameManager g) {

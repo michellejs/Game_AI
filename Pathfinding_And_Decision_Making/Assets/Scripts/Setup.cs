@@ -35,7 +35,7 @@ public class Setup : Game
 	private int[,] mazeData = new int[16,16];
 	string instructions = "Press each button to choose terrain type. \n O = Open \n S = Swamp \n G = Grass \n # = Obstacle \n B = Begin \n E = End \n Choose \"E\" and \"B\" only once each. Press \"Random Start\" to have the program randomly generate the terrain map for you.";
 	
-	public override void startSetup()
+	/*public override void startSetup()
 	{
 		Debug.Log("Setup");
 		clearMazeData ();
@@ -45,10 +45,10 @@ public class Setup : Game
 		//obj = (GameObject)Instantiate (PlayingCard, transform.position,transform.rotation);
 		//Instantiate (PlayingCard, new Vector3(0,0,0), Quaternion.identity);
 		//PlayingCard card = new PlayingCard();
-	}
+	}*/
 
 	
-	private void setDisplayButtons()
+	public void setDisplayButtons()
 	{
 		//Destroy the button grid when leaving screen!!!!
 
@@ -178,7 +178,7 @@ public class Setup : Game
 		mazeData [endX, endY] = 5;
 
 	}
-	private void clearMazeData()
+	public void clearMazeData()
 	{
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
