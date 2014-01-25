@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AStar.cs" />
      <Compile Include="Assets\Scripts\Combobox.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -57,11 +58,6 @@
      <Compile Include="Assets\Scripts\States\SetBoardState.cs" />
      <Compile Include="Assets\Scripts\States\State.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
-     <None Include="Assets\Vectrosity\Documentation\Vectrosity changelog.txt" />
-     <None Include="Assets\Vectrosity\Documentation\Vectrosity Upgrade Guide.txt" />
- <Reference Include="Assets\Vectrosity\Vectrosity_Unity3">
- <HintPath>Assets\Vectrosity\Vectrosity_Unity3.dll</HintPath>
- </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

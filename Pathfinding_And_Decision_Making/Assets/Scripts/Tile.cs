@@ -4,6 +4,7 @@ using System.Collections;
 public class Tile {
 
 	public Point point;
+
 	int gScore;
 	int hScore;
 	int fScore;

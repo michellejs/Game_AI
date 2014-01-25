@@ -64,46 +64,36 @@ public class Play : Game
 
 				case 0:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/OpenSpace"));
-					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-					tile.transform.position = pos;
-					tiles.Add(tile);
+					//pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
+					//tile.transform.position = pos;
+					//tiles.Add(tile);
 					break;
 					case 1:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Swamp"));
-					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-					tile.transform.position = pos;
-					tiles.Add(tile);
+
 					break;
 				case 2:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Grassland"));
-					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-					tile.transform.position = pos;
-					tiles.Add(tile);
+				
 					break;
 					case 3:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Obstacle"));
-					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-					tile.transform.position = pos;
-					tiles.Add(tile);
+			
 					break;	
 				case 4:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Start"));
-					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-					tile.transform.position = pos;
-					tiles.Add(tile);
+				
 					break;
 
-				case 5:
+				default:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/End"));
-					pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
-					tile.transform.position = pos;
-					tiles.Add(tile);
+				
 					break;
 					}
-				//GameObject tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Grassland"));
-								//Vector3 pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 5);
-								//tile.transform.position = pos;
-								//tiles.Add(tile);
+
+				pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, -5);
+				tile.transform.position = pos;
+				tiles.Add(tile);
 								spacer1 += 0.45f;
 				}
 			
@@ -124,7 +114,7 @@ public class Play : Game
 				}
 			}
 		}
-	public void clearGrid(){//figure out how to destroy grid tiles
+		public void clearGrid(){//figure out how to destroy grid tiles
 		System.Array.Clear (grid, 0, grid.Length);
 		foreach (GameObject tile in tiles) {
 			Destroy (tile);
