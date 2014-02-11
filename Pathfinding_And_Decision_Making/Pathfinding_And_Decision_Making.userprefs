@@ -1,19 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tile.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../StateMachines - Assignment2Program2/StateMachines-Assignment2Program2/Assets/States/PlayerState.cs">
     <Files>
-      <File FileName="Assets/Scripts/Tile.cs" Line="7" Column="1" />
-      <File FileName="Assets/Scripts/States/SetBoardState.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/States/MainMenuState.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/States/PlayGameState.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Setup.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Play.cs" Line="94" Column="99" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="6" Column="63" />
-      <File FileName="Assets/Scripts/States/GameStateMachine.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/States/State.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Combobox.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Game.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/AStar.cs" Line="1" Column="1" />
+      <File FileName="../StateMachines - Assignment2Program2/StateMachines-Assignment2Program2/Assets/player states temp.txt" Line="49" Column="1" />
+      <File FileName="../StateMachines - Assignment2Program2/StateMachines-Assignment2Program2/Assets/States/PlayerState.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

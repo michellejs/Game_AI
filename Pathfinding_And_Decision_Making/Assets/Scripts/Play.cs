@@ -13,17 +13,16 @@ public class Play : Game
 		
 	}
 
-	public GameObject Grassland;
-
-	static int gridLength = 16;
-	static int gridHeight = 16;
+	public static int gridLength = 16;
+	public static int gridHeight = 16;
 
 	public bool finishPressed = false;
 	public bool playDisplayed = false;
 
 	//public List<Tile> grid = new List<Tile> ();
-	Tile[,] grid = new Tile[gridLength,gridHeight];
-	List<GameObject> tiles = new List<GameObject>();
+	private Tile[,] grid = new Tile[gridLength,gridHeight];
+	private List<GameObject> tiles = new List<GameObject>();
+	public AStar astar;
 	//public override void startSetup()
 	//{
 	//	Debug.Log("playSetup");
@@ -31,14 +30,18 @@ public class Play : Game
 		//dealTiles ();
 
 
-		/*
-		 * //Place Prefab
-		GameObject grassland = (GameObject)Instantiate(Resources.Load("Grassland"));
-		Vector3 testPosition = new Vector3 (0, 0, 0);
-		grassland.transform.position = testPosition;
-		*/
+
 
 	//}
+	public int getGridLength(){
+		return gridLength;
+	}
+	public int getGridHeight(){
+		return gridHeight;
+	}
+	public Tile[,] getTileGrid(){
+		return grid;
+	}
 	public void createTiles(){
 
 		int[,] mazeData = Setup.Instance.getMazeData ();
@@ -59,7 +62,6 @@ public class Play : Game
 			for (int j=0; j<gridHeight; j++) {
 				GameObject tile;
 				Vector3 pos;
-				Debug.Log ("cost: " + grid[i,j].cost);
 				switch(grid[i,j].cost){
 
 				case 0:
@@ -67,31 +69,32 @@ public class Play : Game
 					//pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, 0);
 					//tile.transform.position = pos;
 					//tiles.Add(tile);
+					grid[i,j].setGScore(0);
 					break;
 					case 1:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Swamp"));
-
+					grid[i,j].setGScore(4);
 					break;
 				case 2:
 					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Grassland"));
-				
+					grid[i,j].setGScore(3);
 					break;
 					case 3:
-					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Obstacle"));
-			
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Obstacle"));//fscore of 1000 for obstacles to make them impassable
+					grid[i,j].setGScore (1000);
 					break;	
 				case 4:
-					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Start"));
-				
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/End"));//Lowest value for end square so its fscore will be lower
+					grid[i,j].setGScore (-1);
 					break;
 
 				default:
-					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/End"));
-				
+					tile = (GameObject)Instantiate (Resources.Load ("Prefabs/Start"));//Arbitrary fscore for start because its fscore doesn't matter
+					grid[i,j].setGScore(10000);
 					break;
 					}
 
-				pos = new Vector3 ((grid [i, j].point.x - spacer2) - 2, (grid [i, j].point.y - spacer1) - 3, -5);
+				pos = new Vector3 ((grid [i, j].gPoint.x - spacer2) - 2, (grid [i, j].gPoint.y - spacer1) - 3, -5);
 				tile.transform.position = pos;
 				tiles.Add(tile);
 								spacer1 += 0.45f;
@@ -101,6 +104,14 @@ public class Play : Game
 						spacer1 = 0.0f;
 			}
 		}
+	public void startPathFinding (){
+		astar = GameObject.FindObjectOfType(typeof(AStar)) as AStar;
+		Debug.Log ("Start PathFinding");
+		astar.aStarStart ();
+
+
+		//GameObject.Destroy (astar);
+	}
 	private void OnGUI(){
 
 				

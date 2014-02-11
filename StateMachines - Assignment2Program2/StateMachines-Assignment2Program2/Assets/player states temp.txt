@@ -1,0 +1,244 @@
+
+using UnityEngine;
+using System.Collections;
+
+public class FallingState : JumpingState {
+	
+	public FallingState (PlayerController player) : base (player) {}
+	
+	public override void OnEnter () {
+		player.GetComponent<Animator>().SetTrigger("Fall");
+	}
+	
+}
+sing UnityEngine;
+using System.Collections;
+
+public class DyingState : PlayerState {
+	
+	public DyingState (PlayerController player) : base (player) {}
+
+	float countdown;
+
+	public override void OnEnter () {
+		player.GetComponent<Animator>().SetTrigger("Explode");
+		countdown = player.respawnTimeout;
+
+		player.collider2D.enabled = false;
+		player.rigidbody2D.isKinematic = true;
+
+		player.gameObject.audio.PlayOneShot(player.explosionSound);
+
+		player._fireableBoomerangs = 0;
+	}
+
+	override public void Update () {
+		countdown -= Time.deltaTime;
+		if (countdown < 0) {
+			Debug.Log("Respawn");
+			player.collider2D.enabled = true;
+			player.rigidbody2D.isKinematic = false;
+			player._fireableBoomerangs = 3;
+			player.EnterState(typeof(StandingState));
+			player.GetComponent<Animator>().SetTrigger("Respawn");
+			player.Respawn();
+		}
+	}
+
+}
+using UnityEngine;
+using System.Collections;
+
+public class JumpingState : PlayerState {
+	
+	public JumpingState (PlayerController player) : base (player) {}
+
+	public override void OnEnter () { 
+
+		player.gameObject.rigidbody2D.velocity += Vector2.up * player.instantaneousJumpVelocity;
+		player.GetComponent<Animator>().SetTrigger("Jump");
+
+		player.gameObject.audio.PlayOneShot(player.jumpSound);
+	}
+	
+	override public void Jump () {
+		//Debug.Log("Player " + player.joystick + " Jumping Jump");
+		if (player._canDoublejump)
+		{
+			player._canDoublejump = false;
+			player.SpawnDoublejumpExplosion();
+			player.EnterState(typeof(JumpingState));
+		}
+	}
+	
+	override public void Throw () {
+		Debug.Log("Player " + player.joystick + " Jumping Throw");
+	}
+
+	override public void Left () {
+		float vx = player.rigidbody2D.velocity.x - player.horizontalAirAcceleration;
+		vx = Mathf.Clamp(vx, -player.maxAirHorizontalVelocity, player.maxAirHorizontalVelocity);
+		player.rigidbody2D.velocity = new Vector2(vx, player.rigidbody2D.velocity.y);
+	}
+	
+	override public void Right () {
+		float vx = player.rigidbody2D.velocity.x + player.horizontalAirAcceleration;
+		vx = Mathf.Clamp(vx, -player.maxAirHorizontalVelocity, player.maxAirHorizontalVelocity);
+		player.rigidbody2D.velocity = new Vector2(vx, player.rigidbody2D.velocity.y);
+	}
+
+	override public void HitFloor(){
+		Debug.Log("Player " + player.joystick + " Landed");
+		player.EnterState(typeof(StandingState));
+
+		player.GetComponent<Animator>().SetTrigger("Land");
+	}
+
+	override public void HitWall () {
+		player.EnterState(typeof(WallSlidingState));
+	}
+
+	public override void HitPlayer (Collision2D coll) {
+		// we don't care if we're on our way up
+		if (player.rigidbody2D.velocity.y > 0) return;
+
+		float deltaY = player.transform.position.y - coll.transform.position.y;
+		Debug.Log("delta y " + deltaY);
+		if (deltaY > 0.5f) {
+			//coll.gameObject.GetComponent<PlayerController>();
+			Debug.Log(player.name + " stomped " + coll.gameObject.name);
+
+			PlayerController other = coll.gameObject.GetComponent<PlayerController>();
+			if (!other.isInvincible) other.EnterState(typeof(DyingState));
+
+			player.EnterState(typeof(StompingState));
+		}
+	}
+
+	public override void Update () {
+		player.GetComponent<Animator>().SetFloat("y-velocity", player.rigidbody2D.velocity.y);
+	}
+	
+}
+using UnityEngine;
+using System.Collections;
+
+public class StandingState : PlayerState {
+
+	public StandingState (PlayerController player) : base (player) {}
+
+	private bool isIdle = true;
+
+	public override void OnEnter ()
+	{
+		player._canDoublejump = true;
+		Animator animator = player.GetComponent<Animator>();
+	}
+
+	override public void Jump () {
+
+		RaycastHit2D hitL = Physics2D.Raycast((Vector2)(player.transform.position) + Vector2.up * 0.52f + Vector2.right * -0.2f,Vector2.up,0.06f, player.gameObject.layer-4);
+		//Debug.DrawRay((Vector2)(player.transform.position) + Vector2.up * 0.52f + Vector2.right * -0.2f,Vector2.up);
+		RaycastHit2D hitR = Physics2D.Raycast((Vector2)(player.transform.position) + Vector2.up * 0.52f + Vector2.right * 0.2f,Vector2.up,0.06f, player.gameObject.layer-4);
+		//Debug.DrawRay((Vector2)(player.transform.position) + Vector2.up * 0.52f + Vector2.right * 0.2f,Vector2.up);
+
+
+		if (hitL.collider != null) {
+			Debug.Log("Collider name: " + hitL.collider.name);
+			player.EnterState(typeof(StandingState));
+		}
+		else if (hitR.collider != null) {
+			Debug.Log("Collider name: " + hitR.collider.name);
+			player.EnterState(typeof(StandingState));
+		} else {
+			Debug.Log("Player " + player.joystick + " Standing Jump");
+			player.EnterState(typeof(JumpingState));
+		}
+	}
+
+	override public void Throw () {
+		Debug.Log("Player " + player.joystick + " Standing Throw");
+	}
+
+	override public void Left () {
+		float vx = player.rigidbody2D.velocity.x - player.groundAcceleration;
+		vx = Mathf.Clamp(vx, -player.maxGroundVelocity, player.maxGroundVelocity);
+		player.rigidbody2D.velocity = new Vector2(vx, player.rigidbody2D.velocity.y);
+
+		player.transform.localScale = new Vector3(-1,1,1);
+
+		if (isIdle) player.GetComponent<Animator>().SetTrigger("WalkToRun");
+		isIdle = false;
+	}
+
+	override public void Right () {
+		float vx = player.rigidbody2D.velocity.x + player.groundAcceleration;
+		vx = Mathf.Clamp(vx, -player.maxGroundVelocity, player.maxGroundVelocity);
+		player.rigidbody2D.velocity = new Vector2(vx, player.rigidbody2D.velocity.y);
+
+		player.transform.localScale = new Vector3(1,1,1);
+		
+		if (isIdle) player.GetComponent<Animator>().SetTrigger("WalkToRun");
+		isIdle = false;
+	}
+
+	override public void Idle () {
+		if (!isIdle) player.GetComponent<Animator>().SetTrigger("RunToWalk");
+		isIdle = true;
+	}
+	
+}
+using UnityEngine;
+using System.Collections;
+
+public class StompingState : StandingState {
+
+	public StompingState (PlayerController player) : base (player) {}
+
+	float countdown;
+
+	override public void Jump () {
+		Debug.Log("Player " + player.joystick + " Stomping Jump");
+		player.EnterState(typeof(JumpingState));
+	}
+
+	override public void OnEnter () {
+		countdown = player.stompingJumpTimeout; // seconds
+	}
+
+	override public void HitFloor(){
+		player.EnterState(typeof(StandingState));
+	}
+
+	override public void Update () {
+		countdown -= Time.deltaTime;
+		if (countdown < 0) {
+			player.EnterState(typeof(FallingState));
+		}
+	}
+
+}
+using UnityEngine;
+using System.Collections;
+
+public class WallSlidingState : FallingState {
+
+	public bool right;
+
+	public WallSlidingState (PlayerController c) : base (c) {}
+
+	override public void Jump () {
+		Vector2 jump = player.wallJumpInstantaneousVelocityDir;
+		if (player.wallRight) {
+			jump = new Vector2(jump.x * -1, jump.y);
+		}
+
+		player.gameObject.rigidbody2D.velocity += jump;
+
+		player.EnterState(typeof(FallingState));
+		player.GetComponent<Animator>().SetTrigger("Jump");
+
+		player.gameObject.audio.PlayOneShot(player.wallJumpSound);
+	}
+
+}

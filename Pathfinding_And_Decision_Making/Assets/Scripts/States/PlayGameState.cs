@@ -26,6 +26,7 @@ public sealed class PlayGameState :  State<GameManager> {
 			//Play.Instance.startSetup();//probably get rid of this and GAME all together
 			Play.Instance.createTiles();
 			Play.Instance.displayGrid();
+			Play.Instance.startPathFinding();
 		}
 	}
 	/*private void createTiles(){
