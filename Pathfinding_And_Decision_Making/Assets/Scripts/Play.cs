@@ -19,7 +19,7 @@ public class Play : Game
 	public bool finishPressed = false;
 	public bool playDisplayed = false;
 
-	//public List<Tile> grid = new List<Tile> ();
+	//public List<> grid = new List<Tile> ();
 	private Tile[,] grid = new Tile[gridLength,gridHeight];
 	private List<GameObject> tiles = new List<GameObject>();
 	public AStar astar;
@@ -96,6 +96,7 @@ public class Play : Game
 
 				pos = new Vector3 ((grid [i, j].gPoint.x - spacer2) - 2, (grid [i, j].gPoint.y - spacer1) - 3, -5);
 				tile.transform.position = pos;
+				grid[i,j].setScreenPoint (pos.x, pos.y);
 				tiles.Add(tile);
 								spacer1 += 0.45f;
 				}

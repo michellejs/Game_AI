@@ -41,6 +41,9 @@ public class Tile {
 	public int getFScore(){
 		return fScore;
 	}
+	public void setScreenPoint(float x, float y){
+		sPoint = new ScreenPoint (x, y);
+	}
 }
 
 //maybe remove

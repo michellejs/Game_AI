@@ -1,9 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../StateMachines - Assignment2Program2/StateMachines-Assignment2Program2/Assets/States/PlayerState.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AStar.cs">
     <Files>
-      <File FileName="../StateMachines - Assignment2Program2/StateMachines-Assignment2Program2/Assets/player states temp.txt" Line="49" Column="1" />
-      <File FileName="../StateMachines - Assignment2Program2/StateMachines-Assignment2Program2/Assets/States/PlayerState.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/AStar.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Tile.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Setup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Play.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/States/PlayGameState.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
