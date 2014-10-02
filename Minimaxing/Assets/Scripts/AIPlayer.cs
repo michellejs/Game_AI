@@ -5,7 +5,8 @@ public class AIPlayer {
 	
 
 	public int aiMove(){//eventually this should take game parameters
-		int move = Random.Range (0, 6);
+		int move = Random.Range (0, 7);
+		Debug.Log ("computer move = " + move);
 		return move;
 
 	}

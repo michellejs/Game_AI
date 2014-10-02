@@ -1,52 +1,43 @@
 using UnityEngine;
 
-//public sealed class MainMenuState :  State<GameManager> {
 public class MainMenuState :  State<GameManager> {
-	//string nextState = "playAccordianState";
+
 	
-	
+	//Each state is a singleton. The game manager switches states so
+	//only one is active at a time.
 	static readonly MainMenuState instance = new MainMenuState();
 	public static MainMenuState Instance {
 
 		get 
 		{
-			//if(instance == null)
-			//{	
 				return instance;
-			//}
 		}
 	}
 	static MainMenuState() { }
 	public MainMenuState() { }
 	string selectedGame;
 		
+	//Enter runs once each time this state becomes active
 	public override void Enter (GameManager g) {
 		if (g.Location != Locations.mainMenu) {
-			Debug.Log("EnterMainMenu");
 			g.ChangeLocation(Locations.mainMenu);
 		}
 	}
 	
-	//public override void Execute (GameManager g) 
+	//Execute overrides Unity3ds Update() method
+	//It executes once per frame when this state is active
+	//Checks to see if(startPressed) and if true changes to the next state
 	public override void Execute(GameManager g)
 	{
-
-
 		if (MainMenu.Instance.startPressed)				
 			SetNextState (g, "playGameState");
-
-
-		
-				//g.ChangeState(PlayAccordianState.Instance);
-		//g.ChangeState (nextState);
-	
-
 	}
+	//Runs once before exiting this state
+	//Used for any cleanup necessary when leaving state
 	public override void Exit(GameManager g) {
-		Debug.Log("Exiting MainMenu");
 
-		Debug.Log ("here is where start button disappear");
 	}
+	//Caused the GameManager to switch to the next state
 	public override void SetNextState(GameManager g, string state)
 	{
 		g.ChangeState (state);

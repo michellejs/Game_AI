@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour {
 		
 		states = new Dictionary<string, State<GameManager>>();
 		states.Add ("mainMenu", new MainMenuState());
-		states.Add ("setBoardState", SetBoardState.Instance);
 		states.Add ("playGameState", PlayGameState.Instance);
 		
 		//Accordian.GetInstance();

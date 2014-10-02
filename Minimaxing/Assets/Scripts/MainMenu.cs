@@ -13,15 +13,14 @@ public class MainMenu : Game
 	}
 
 	public bool startPressed = false;
-	private int startNumberAnts = 1;
-	// Use this for initialization
+
 	void Start () {
 	
 	}
+	//Displays start button on screen - button toggles startPressed
 	private void OnGUI(){
 		if(!startPressed){
 			if(GUI.Button(new Rect(20,40,120,20), "start")) {
-				Debug.Log("Start Pressed");
 				startPressed = true;
 			}
 		}
@@ -30,8 +29,5 @@ public class MainMenu : Game
 	// Update is called once per frame
 	void Update () {
 	
-	}
-	public int getAntNum(){
-		return startNumberAnts;
 	}
 }

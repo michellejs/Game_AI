@@ -13,10 +13,7 @@ public class Play : Game
 
 		
 	}
-	//public static int gridLength = 16;
-	//public static int gridHeight = 16;
-
-	
+		
 	AIPlayer computerPlayer;
 	GameObject go;
 
@@ -32,7 +29,6 @@ public class Play : Game
 	int[,] gameBoard;
 	void Start(){
 		computerPlayer = new AIPlayer ();
-
 	}
 	public void createGameBoard()
 	{
@@ -89,7 +85,7 @@ public class Play : Game
 	//Wait for 1 second then get the Computer move and call the dropCurrentPiece method. Finally set the player 
 	//turn to true.
 	IEnumerator computerTurn(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(2);
 		int computerMove = computerPlayer.aiMove();
 		dropCurrentPiece (computerMove);
 		playerTurn = true;
