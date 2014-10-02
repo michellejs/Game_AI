@@ -153,18 +153,6 @@ public class Play : Game
 			Vector3 temp = new Vector3(x[column],4,0);	
 			token.transform.position = temp;
 		}
-		//Vector3 temp = new Vector3(x[column],4,0);	
-		//token.transform.position = temp;
-
 
 	}
-
-
-	/*
-	public void clearGrid(){//figure out how to destroy grid tiles
-		System.Array.Clear (grid, 0, grid.Length);
-		foreach (GameObject tile in tiles) {
-			Destroy (tile);
-		}
-	}*/
 }
