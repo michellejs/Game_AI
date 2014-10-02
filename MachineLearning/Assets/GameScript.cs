@@ -80,37 +80,51 @@ public class GameScript : MonoBehaviour {
 	private void clearEndGame(){
 		//reset player and ai icon colours
 		//remove icons
-		Debug.Log ("clear end game");
 		foreach (GameObject image in aiImages) {
 			image.GetComponent<Image>().color = Color.white;
 			image.SetActive(false);
 		}
-		Debug.Log ("here");
 		foreach (GameObject button in actionButtons) {
-			//button.GetComponentInChildren<Image>().color = Color.gray;
-			//button.SetActive(false);
+			button.SetActive(false);
 		}
 		textEndGame.SetActive (false);
 
 	}
 	private void showEndGame(int winner, int player, int ai){
-		//show player choice highlighted in different colour.
-		//show ai selected one colour if player win
-		//show ai selected a different colour if ai win
-		//show both selected a third color if draw
-		Debug.Log ("show end game");
-		if (winner == 0) {
-			draw (winner, player, ai);
+		Color colorPlayer = Color.white;
+		Color colorAI = Color.white;
+		string endText = "Should never be read";
+
+		switch(winner){
+		case 0: 
+			colorPlayer = Color.blue;
+			colorAI = Color.blue;
+			endText = "DRAW";
+			break;
+
+		case -1: 
+			colorPlayer = Color.red;
+			colorAI = Color.green;
+			endText = "LOSE";
+			break;
+		
+		case 1:
+			colorPlayer = Color.green;
+			colorAI = Color.red;
+			endText = "WIN";
+			break;
 		}
+		endGame (player, ai, colorPlayer, colorAI, endText);
 	}
-	private void draw(int winner, int player, int ai){
+
+	private void endGame(int player, int ai, Color colorPlayer, Color colorAI, string text){
 		aiImages[ai].SetActive(true);
-		aiImages[ai].GetComponent<Image>().color = Color.blue;
+		aiImages[ai].GetComponent<Image>().color = colorAI;
 		actionButtons[player].SetActive(true);
-		actionButtons[player].GetComponentInChildren<Image>().color = Color.blue;
+		actionButtons[player].GetComponentInChildren<Image>().color = colorPlayer;
 		textEndGame.SetActive(true);
-		textEndGame.GetComponent<Text>().text = "DRAW";
-		textEndGame.GetComponent<Text>().color = Color.blue;
+		textEndGame.GetComponent<Text>().text = text;
+		textEndGame.GetComponent<Text>().color = colorPlayer;
 	}
 	public void reset(){
 		//reset statistic history
@@ -150,8 +164,10 @@ public class GameScript : MonoBehaviour {
 	//Sets rock, paper, scissors, lizard and spock buttons
 	//to Active and makes them visible
 	private void setActionButtonsActive(){
-		foreach (GameObject button in actionButtons)
+		foreach (GameObject button in actionButtons) {
 			button.SetActive (true);
+			button.GetComponentInChildren<Image>().color = Color.white;
+		}
 	}
 	//Sets all of the variables to align with their proper GameObjects(Images, Buttons,
 	//Text etc). Adds GUI objects into Lists in order to manipulate them easier.
