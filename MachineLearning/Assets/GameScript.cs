@@ -22,6 +22,7 @@ public class GameScript : MonoBehaviour {
 	GameObject textRandom;
 	List<GameObject> actionButtons, menuButtons, aiImages, statsText;
 	List<int> selectionHistory;
+	List<string> permutations;
 	int[] currentStats, aiSelection, metricWins;
 	int totalGames, totalNonDraw, aiWins, playerWins, draws, randomAIWins, metric1AIWins, metric2AIWins, metric3AIWins;
 	bool statsOn;
@@ -58,6 +59,10 @@ public class GameScript : MonoBehaviour {
 		}
 		//keeps track of which choice the player makes
 		currentStats = new int[5];
+
+		//calculates N-Gram Window options
+		permutations = getPermutationsWithRepitition ();
+		GameAI.test ();
 
 	}
 	private int[] otherOptionBeatenBySelection(int selection){
@@ -214,7 +219,6 @@ public class GameScript : MonoBehaviour {
 		//find the two things those options beat
 		int[] first = new int[2];
 		int[] second = new int[2];
-
 		first = otherOptionBeatenBySelection (ops [0]);
 		second = otherOptionBeatenBySelection (ops [1]);
 
@@ -244,8 +248,49 @@ public class GameScript : MonoBehaviour {
 		Debug.Log ("Metric 3 " + final);
 		return final;
 	}
-	//This takes the N gram and compares based on that. 
+	//This calculates all the possible permuatations of options
+	//for the game with an N-gram size of 4. It would be possible
+	//to load this info instead of calculating it but since there
+	//are only 5x5x5x5 possible permutations it doesn't take
+	//very long.
+	private List<string> getPermutationsWithRepitition(){
+		List<string> perms = new List<string> ();
+		int numOfOptions = 5;
+		for(int i=0; i<numberOfOptions; i++){
+			for(int j=0; j<numberOfOptions; j++){
+				for(int k=0; k<numberOfOptions; k++){
+					for(int l=0; l<numberOfOptions; l++){
+						string num = i.ToString()+j.ToString()+k.ToString()+l.ToString();
+						perms.Add(num);
+					}
+				}
+			}
+		}
+		return perms;
+	}
+
 	private int getMetric4(){
+		int [] counts = new int[permutations.Count ()];
+		//This should be called from start
+		if (selectionHistory.Count() >= 4) {//if there is enough data to make a match
+			//go through the entire selectionHistory list in groups of 4 and for each block of 4 update
+			//the value in the array corresponding to the index of the pattern match
+
+		}
+
+
+		//Make prediction
+		//get the last 3 choices, create 5 strings the last 3 choices + 0, + 1 etc
+		//Find out which has the highest number of matches. IF none have the highest return random
+		//If one has the highest that is our probable prediction. Now we need to find out which of
+		//the secondary win conditions for the two matches that beat the prediction is most likely
+		//Find what beats the prediction - we will call them X and Y
+		//Find the other option that X and Y beat besides the prediction.
+		//Find out which one of them has the highest probabilty of being chosen (after the predictor)
+		//Choose X or Y based on that. Return X or Y.
+
+
+		//Every time the user chooses the pattern counter needs to be updated
 		return 0;
 
 	}
@@ -327,7 +372,7 @@ public class GameScript : MonoBehaviour {
 		if(statsOn)//the stats must be active to be updated
 			updateStatsText ();
 		showEndGame (winner, choice, aiSelection[currentMetric]);
-		Debug.Log ("Current Metric: " + currentMetric + " Metrics: Random-" + metricWins [0] + " M1-" + metricWins [1] + " M2-" + metricWins [2] + " M3-" + metricWins [3]);
+		Debug.Log ("Current Metric: " + currentMetric + " Metrics: Random-" + metricWins [0] + " M1-" + metricWins [1] + " M2-" + metricWins [2] + " M3-" + metricWins [3] + " M4- " + metricWins[4]);
 
 		setMenuButtonsActive();
 	}
@@ -577,4 +622,13 @@ public class GameScript : MonoBehaviour {
 
 		textRandom = GameObject.Find ("Text_Random");
 	}
+}
+public class GameAI{
+	public static void test(){
+		Debug.Log ("test");
+
+	}
+
+
+
 }
